@@ -13,10 +13,8 @@ add_executable(tinker
         main.cpp
         exercise/sort.cpp
         exercise/sort.h
-        exercise/tt_primary.cpp)
+)
 target_link_libraries(tinker PRIVATE fmt::fmt)
 
-
-#add_test(AllTestsInMain main)
 add_executable(tinker_unittest unittest/unittest_grammar.cpp)
-target_link_libraries(tinker_unittest PRIVATE GTest::gtest GTest::gtest_main glog::glog  fmt::fmt-header-only)
+target_link_libraries(tinker_unittest PRIVATE GTest::gtest GTest::gtest_main glog::glog fmt::fmt-header-only)
