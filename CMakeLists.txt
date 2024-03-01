@@ -6,4 +6,6 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(tinker
-        main.cpp)
+        main.cpp
+        exercise/sort.cpp
+        exercise/sort.h)
