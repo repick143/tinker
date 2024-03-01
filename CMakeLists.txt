@@ -11,12 +11,12 @@ find_package(fmt CONFIG REQUIRED)
 
 include_directories(.)
 
+add_library(exercises exercise/sort.cpp)
 add_executable(tinker
         main.cpp
-        exercise/sort.cpp
-        exercise/sort.h
 )
-target_link_libraries(tinker PRIVATE fmt::fmt)
+target_link_libraries(tinker PRIVATE fmt::fmt exercises)
 
-add_executable(tinker_unittest unittest/unittest_grammar.cpp)
-target_link_libraries(tinker_unittest PRIVATE GTest::gtest GTest::gtest_main glog::glog fmt::fmt)
+add_executable(tinker_unittest unittest/unittest_grammar.cpp
+        unittest/unittest_sort.cpp)
+target_link_libraries(tinker_unittest PRIVATE GTest::gtest GTest::gtest_main glog::glog fmt::fmt exercises)

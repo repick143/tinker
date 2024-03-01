@@ -2,6 +2,7 @@
 # To keep your changes, remove these comment lines, but the plugin won't be able to modify your requirements
 
 requirements:
+  - "boost/1.84.0"
   - "fmt/10.2.1"
   - "glog/0.7.0"
   - "gtest/1.14.0"

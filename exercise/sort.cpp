@@ -4,8 +4,6 @@
 
 #include "sort.h"
 
-void trans(int* arr, int32_t start, int32_t end) {
-}
-
-void sort(int* arr, int32_t length){
-}
+namespace tinker {
+void quick_sort(int *arr, int32_t length) {}
+} // namespace tinker

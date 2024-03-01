@@ -1,9 +1,7 @@
 //
 // Created by ccx on 2024/3/1.
 //
-#include "gtest/gtest.h"
 #include "fmt/core.h"
+#include "gtest/gtest.h"
 
-TEST(grammar, decltype_case) {
-    fmt::print("the magic mode is {}", 143);
-}
+TEST(grammar, decltype_case) { fmt::print("the magic mode is {}", 143); }

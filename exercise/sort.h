@@ -7,6 +7,9 @@
 
 #include <cstdint>
 
-void sort(int* arr, int32_t length);
+namespace tinker {
+    void quick_sort(int *arr, int length);
+}
+
 
 #endif //TINKER_SORT_H
