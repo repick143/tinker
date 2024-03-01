@@ -33,3 +33,4 @@
 
 /vcpkg_installed
 /cmake-build-debug
+/venv

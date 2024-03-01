@@ -7,6 +7,8 @@
     "gtest",
     "glog",
     "fmt",
-    "boost"
+    "boost",
+    "folly"
   ]
 }
+//-DCMAKE_TOOLCHAIN_FILE=/Users/ccx/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake
