@@ -6,7 +6,7 @@
 #define TINKER_SMART_PTR_H
 
 #include <algorithm>
-
+namespace tinker {
 template<typename T>
 class smart_ptr {
  public:
@@ -14,7 +14,8 @@ class smart_ptr {
   ~smart_ptr() { delete ptr_; }
 
   explicit smart_ptr(T *p) : ptr_(p) {}
-  smart_ptr(smart_ptr &&other) noexcept {
+  template<typename U>
+  smart_ptr(smart_ptr<U> &&other) noexcept {
     ptr_ = other.release();
   }
   smart_ptr &operator=(smart_ptr rhs) {
@@ -39,5 +40,7 @@ class smart_ptr {
   }
   T *ptr_{nullptr};
 };
+
+}
 
 #endif // TINKER_SMART_PTR_H

@@ -11,14 +11,16 @@ find_package(fmt CONFIG REQUIRED)
 include_directories(.)
 
 add_library(exercises exercise/sort.cpp
-        exercise/smart_ptr.cpp
         exercise/smart_ptr.h
-        exercise/Shape.cpp
-        exercise/Shape.h)
+        exercise/Shape.h
+        exercise/Circle.cpp
+        exercise/Circle.h)
+target_link_libraries(exercises PRIVATE fmt::fmt)
+
 add_executable(tinker
         main.cpp
 )
-target_link_libraries(tinker PRIVATE fmt::fmt exercises)
+target_link_libraries(tinker PRIVATE exercises)
 
 add_executable(tinker_unittest
         unittest/unittest_grammar.cpp

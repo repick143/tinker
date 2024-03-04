@@ -5,8 +5,10 @@
 #include "gtest/gtest.h"
 #include "exercise/smart_ptr.h"
 #include "exercise/Shape.h"
+#include "exercise/Circle.h"
 #include <string>
 
+namespace tinker {
 TEST(grammar, decltype_case) {
   fmt::print("the magic mode is {}", 143);
   auto v = 123;
@@ -16,13 +18,13 @@ TEST(grammar, decltype_case) {
 
 TEST(exercise, smart_ptr) {
   {
-    smart_ptr<Shape> shape(new Shape());
+    smart_ptr<Shape> shape(new Circle());
 //  smart_ptr<Shape> p1(shape);
     smart_ptr<Shape> p1(std::move(shape));
 
   }
   {
-    smart_ptr<Shape> shape(new Shape(1, 2));
+    smart_ptr<Shape> shape(new Circle(2));
     smart_ptr<Shape> p1;
 //    p1 = shape;
     p1 = std::move(shape);
@@ -31,3 +33,5 @@ TEST(exercise, smart_ptr) {
     ASSERT_TRUE(p2);
   }
 }
+}
+
