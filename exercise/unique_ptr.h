@@ -15,15 +15,15 @@ class unique_ptr {
   unique_ptr() = default;
   explicit unique_ptr(T *p) : ptr_(p) {}
   ~unique_ptr() { delete ptr_; }
-  unique_ptr(unique_ptr &other) = delete;
 
-  template<typename U>
-  unique_ptr(unique_ptr<U> &&other) noexcept {
-    ptr_ = other.release();
-  }
+  unique_ptr(unique_ptr &other) = delete;
   unique_ptr &operator=(unique_ptr rhs) {
     rhs.swap(*this);
     return *this;
+  }
+  template<typename U>
+  unique_ptr(unique_ptr<U> &&other) noexcept {
+    ptr_ = other.release();
   }
 
   T *get() { return ptr_; }
