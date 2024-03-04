@@ -11,7 +11,7 @@ find_package(fmt CONFIG REQUIRED)
 include_directories(.)
 
 add_library(exercises exercise/sort.cpp
-        exercise/smart_ptr.h
+        exercise/unique_ptr.h
         exercise/Shape.h
         exercise/Circle.cpp
         exercise/Circle.h)

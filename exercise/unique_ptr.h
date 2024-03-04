@@ -6,19 +6,22 @@
 #define TINKER_SMART_PTR_H
 
 #include <algorithm>
-namespace tinker {
-template<typename T>
-class smart_ptr {
- public:
-  smart_ptr() = default;
-  ~smart_ptr() { delete ptr_; }
 
-  explicit smart_ptr(T *p) : ptr_(p) {}
+namespace tinker {
+
+template<typename T>
+class unique_ptr {
+ public:
+  unique_ptr() = default;
+  explicit unique_ptr(T *p) : ptr_(p) {}
+  ~unique_ptr() { delete ptr_; }
+  unique_ptr(unique_ptr &other) = delete;
+
   template<typename U>
-  smart_ptr(smart_ptr<U> &&other) noexcept {
+  unique_ptr(unique_ptr<U> &&other) noexcept {
     ptr_ = other.release();
   }
-  smart_ptr &operator=(smart_ptr rhs) {
+  unique_ptr &operator=(unique_ptr rhs) {
     rhs.swap(*this);
     return *this;
   }
@@ -28,13 +31,14 @@ class smart_ptr {
   T *operator->() { return ptr_; }
   operator bool() const { return ptr_; }
 
- private:
   T *release() {
     T *p = ptr_;
     ptr_ = nullptr;
     return p;
   };
-  void swap(smart_ptr &rhs) {
+
+ private:
+  void swap(unique_ptr &rhs) {
     using std::swap;
     swap(ptr_, rhs.ptr_);
   }
