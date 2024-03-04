@@ -51,13 +51,16 @@ class shared_ptr {
       other.counter_->add_count();
       counter_ = other.counter_;
     }
-    LOG(INFO) << fmt::format("copy construct v={}/{}", static_cast<void *>(ptr_), other.counter_->get_count());
+    LOG(INFO)
+        << fmt::format("copy construct v={}/{}", static_cast<void *>(ptr_), other.counter_->get_count());
   }
 
   template<class U>
   shared_ptr(shared_ptr<U> &&other) {
     LOG(INFO)
-        << fmt::format("move construct counter={}/{}", static_cast<void *>(other.ptr_), other.counter_->get_count());
+        << fmt::format("move construct counter={}/{}",
+                       static_cast<void *>(other.ptr_),
+                       other.counter_->get_count());
     ptr_ = other.ptr_;
     if (ptr_) {
       counter_ = other.counter_;
