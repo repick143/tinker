@@ -7,6 +7,7 @@
 #include "fmt/core.h"
 #include "gtest/gtest.h"
 #include "exercise/unique_ptr.h"
+#include "exercise/shared_ptr.h"
 #include "exercise/Shape.h"
 #include "exercise/Circle.h"
 #include <memory>
@@ -20,7 +21,6 @@ TEST(grammar, decltype_case) {
 }
 
 TEST(exercise, unique_ptr) {
-  std::unique_ptr<Shape> v;
   {
     unique_ptr<Shape> shape(new Circle());
 //    unique_ptr<Shape> p1(shape);
@@ -38,5 +38,29 @@ TEST(exercise, unique_ptr) {
     LOG(INFO) << "p2.value=" << p2->ToString();
   }
 }
+TEST(exercise, shared_ptr) {
+  shared_ptr<Circle> shape(new Circle());
+  shared_ptr<Shape> p1(shape);
+  EXPECT_TRUE(shape);
+  EXPECT_TRUE(p1);
+  EXPECT_EQ(2, shape.counter());
+  EXPECT_EQ(2, p1.counter());
+  shared_ptr<Shape> p2 = shape;
+  EXPECT_EQ(3, shape.counter());
+  EXPECT_EQ(3, p1.counter());
+  EXPECT_EQ(3, p2.counter());
+  shared_ptr<Shape> p3 = std::move(p2);
+  EXPECT_EQ(3, shape.counter());
+  EXPECT_EQ(3, p1.counter());
+  EXPECT_EQ(0, p2.counter());
+  EXPECT_EQ(3, p3.counter());
+  shared_ptr<Shape> p4(std::move(p3));
+  EXPECT_EQ(3, shape.counter());
+  EXPECT_EQ(3, p1.counter());
+  EXPECT_EQ(0, p2.counter());
+  EXPECT_EQ(0, p3.counter());
+  EXPECT_EQ(3, p4.counter());
 }
+}
+
 
