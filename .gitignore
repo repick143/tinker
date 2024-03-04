@@ -34,3 +34,4 @@
 /vcpkg_installed
 /cmake-build-debug
 /venv
+/cmake-build-debug-event-trace

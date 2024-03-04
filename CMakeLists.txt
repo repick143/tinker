@@ -10,7 +10,11 @@ find_package(fmt CONFIG REQUIRED)
 
 include_directories(.)
 
-add_library(exercises exercise/sort.cpp)
+add_library(exercises exercise/sort.cpp
+        exercise/smart_ptr.cpp
+        exercise/smart_ptr.h
+        exercise/Shape.cpp
+        exercise/Shape.h)
 add_executable(tinker
         main.cpp
 )
