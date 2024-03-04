@@ -38,6 +38,7 @@ TEST(exercise, unique_ptr) {
     LOG(INFO) << "p2.value=" << p2->ToString();
   }
 }
+
 TEST(exercise, shared_ptr) {
   shared_ptr<Circle> shape(new Circle());
   shared_ptr<Shape> p1(shape);
