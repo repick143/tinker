@@ -2,15 +2,18 @@
 // Created by ccx on 2024/3/1.
 //
 #include <string>
+#include <memory>
+#include "array"
 
 #include "glog/logging.h"
+#include "exercise/tp.h"
 #include "fmt/core.h"
+#include "fmt/format.h"
 #include "gtest/gtest.h"
 #include "exercise/unique_ptr.h"
 #include "exercise/shared_ptr.h"
 #include "exercise/Shape.h"
 #include "exercise/Circle.h"
-#include <memory>
 
 namespace tinker {
 TEST(grammar, decltype_case) {
@@ -61,6 +64,17 @@ TEST(exercise, shared_ptr) {
   EXPECT_EQ(0, p2.counter());
   EXPECT_EQ(0, p3.counter());
   EXPECT_EQ(3, p4.counter());
+
+  std::array<int, 5> arr1{};
+  fmt::println("arr={}", fmt::join(arr1.begin(), arr1.end(), ","));
+  std::array<int, 5> arr2;
+  arr2.fill(0);
+  fmt::println("arr={}", fmt::join(arr2.begin(), arr2.end(), ","));
+
+  static_assert(has_reserve_v<std::vector<int>>, "vector has reserve");
+  doSomething(123);
+  doSomething(1.1);
+//  doSomething(std::string(123));
 }
 }
 
