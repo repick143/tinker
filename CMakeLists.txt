@@ -16,7 +16,9 @@ add_library(exercises exercise/sort.cpp
         exercise/Circle.cpp
         exercise/Circle.h
         exercise/shared_ptr.h
-        exercise/tp.h)
+        exercise/tp.h
+        exercise/lru_cache.cpp
+        exercise/lru_cache.h)
 target_link_libraries(exercises PRIVATE fmt::fmt)
 
 add_executable(tinker
