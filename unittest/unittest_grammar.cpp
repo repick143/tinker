@@ -3,6 +3,7 @@
 //
 #include <string>
 #include <memory>
+#include <random>
 #include "array"
 
 #include "glog/logging.h"
@@ -15,8 +16,98 @@
 #include "exercise/Shape.h"
 #include "exercise/Circle.h"
 #include "exercise/LruCache.h"
+#include "exercise/sort.h"
 
 namespace tinker {
+
+class SortCase {
+ public:
+  std::unique_ptr<int64_t> arr{nullptr};
+  int32_t len{0};
+
+  SortCase() = default;
+  explicit SortCase(int32_t len) : len(len) {
+    arr = std::unique_ptr<int64_t>(new int64_t[len]);
+  }
+  SortCase(const SortCase &other) = delete;
+  SortCase(SortCase &&other) noexcept {
+    len = other.len;
+    arr = std::move(other.arr);
+  }
+  SortCase &operator=(SortCase rhs) {
+    rhs.swap(*this);
+    return *this;
+  }
+  SortCase DeepCopy() const {
+    SortCase ret;
+    if (len == 0 || arr == nullptr) return ret;
+    ret.len = len;
+    ret.arr.reset(new int64_t[len]);
+    memcpy(ret.arr.get(), arr.get(), sizeof(int64_t) * len);
+    return ret;
+  }
+
+  bool DeepEqual(const SortCase &other) const {
+    if (len != other.len) return false;
+    if (arr == other.arr) return true;
+    if (arr == nullptr || other.arr == nullptr) return false;
+    auto i = memcmp(arr.get(), other.arr.get(), sizeof(int64_t) * len);
+    if (i == 0) return true;
+    return false;
+  }
+
+  std::string DebugString() const {
+    if (arr == nullptr) {
+      return fmt::format("len={},arr=nullptr", len);
+    }
+    return fmt::format("len={},arr={}", len, fmt::join(arr.get(), arr.get() + len, ","));
+  }
+ private:
+  void swap(SortCase &other) {
+    std::swap(arr, other.arr);
+    std::swap(len, other.len);
+  }
+};
+
+int32_t get_random_int(int32_t begin, int32_t end) {
+  static std::random_device rd;
+  static std::default_random_engine eng(rd());
+  std::uniform_int_distribution<int32_t> distr(begin, end);
+  return distr(eng);
+}
+
+SortCase gen_sort_case() {
+  auto size = get_random_int(1, 100);
+  SortCase ret(size);
+  for (auto i = 0; i < size - 1; i++) {
+    *(ret.arr.get() + i) = get_random_int(1, 100);
+  }
+  return ret;
+}
+
+std::vector<SortCase> gen_sort_case_batch(int32_t size) {
+  std::vector<SortCase> ret;
+  ret.reserve(size);
+  for (auto i = 0; i < size; i++) {
+    ret.emplace_back(gen_sort_case());
+  }
+  return ret;
+}
+
+TEST(exercise, BubbleSort) {
+  auto sort_cases = gen_sort_case_batch(1000);
+  auto sort_check = [](const SortCase &sort_case) {
+    auto tmp = sort_case.DeepCopy();
+    BubbleSort(sort_case.arr.get(), sort_case.len);
+    std::sort(tmp.arr.get(), tmp.arr.get() + tmp.len);
+    EXPECT_TRUE(tmp.DeepEqual(sort_case));
+    LOG(INFO) << tmp.DebugString();
+    LOG(INFO) << sort_case.DebugString();
+  };
+  for (const auto &cs : sort_cases) {
+    sort_check(cs);
+  }
+}
 
 TEST(exercise, LruCache) {
   LruCache lru(2);

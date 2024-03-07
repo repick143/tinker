@@ -8,8 +8,8 @@
 #include <cstdint>
 
 namespace tinker {
-    void quick_sort(int *arr, int length);
+void quick_sort(int *arr, int length);
+void BubbleSort(int64_t *arr, int32_t len);
 }
-
 
 #endif //TINKER_SORT_H
