@@ -2,8 +2,8 @@
 // Created by ccx on 2024/3/6.
 //
 
-#ifndef TINKER_EXERCISE_LRU_CACHE_H_
-#define TINKER_EXERCISE_LRU_CACHE_H_
+#ifndef TINKER_EXERCISE_LRUCACHE_H_
+#define TINKER_EXERCISE_LRUCACHE_H_
 
 #include <cstdint>
 #include <unordered_map>
@@ -19,9 +19,9 @@ struct DLinkedListNode {
 };
 
 namespace tinker {
-class lru_cache {
+class LruCache {
  public:
-  explicit lru_cache(int32_t capacity) : capacity_(capacity) {
+  explicit LruCache(int32_t capacity) : capacity_(capacity) {
     head_ = new DLinkedListNode();
     tail_ = new DLinkedListNode();
     head_->next = tail_;
@@ -40,8 +40,6 @@ class lru_cache {
     if (it == kv_.end()) {
       auto node = new DLinkedListNode(k, v);
       add_to_head(node);
-      kv_[k] = v;
-      if (size++ > )
     }
   }
  private:
@@ -57,4 +55,4 @@ class lru_cache {
 };
 }
 
-#endif //TINKER_EXERCISE_LRU_CACHE_H_
+#endif //TINKER_EXERCISE_LRUCACHE_H_
