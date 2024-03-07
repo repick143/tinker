@@ -14,8 +14,29 @@
 #include "exercise/shared_ptr.h"
 #include "exercise/Shape.h"
 #include "exercise/Circle.h"
+#include "exercise/LruCache.h"
 
 namespace tinker {
+
+TEST(exercise, LruCache) {
+  LruCache lru(2);
+  lru.put(1, 1);
+  lru.put(2, 2);
+  EXPECT_EQ(1, lru.get(1));
+  EXPECT_EQ(2, lru.get(2));
+  lru.put(1, 1);
+  lru.put(1, 1);
+  lru.put(1, 1);
+  lru.put(3, 3);
+  lru.put(3, 3);
+  lru.put(3, 3);
+  EXPECT_EQ(1, lru.get(1));
+  EXPECT_EQ(-1, lru.get(2));
+  EXPECT_EQ(3, lru.get(3));
+  lru.put(1, 11);
+  EXPECT_EQ(11, lru.get(1));
+}
+
 TEST(grammar, decltype_case) {
   fmt::print("the magic mode is {}", 143);
   [[maybe_unused]] auto v = 123;

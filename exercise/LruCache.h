@@ -30,7 +30,7 @@ class LruCache {
   int64_t get(int64_t k) {
     auto it = kv_.find(k);
     if (it != kv_.end()) {
-      move_to_head(it->second);
+      mov_to_head(it->second);
       return it->second->val;
     }
     return -1;
@@ -39,13 +39,43 @@ class LruCache {
     auto it = kv_.find(k);
     if (it == kv_.end()) {
       auto node = new DLinkedListNode(k, v);
+      kv_[k] = node;
       add_to_head(node);
+      if (++size_ > capacity_) {
+        auto key = del_tail();
+        kv_.erase(key);
+      }
+    } else {
+      it->second->val = v;
+      mov_to_head(it->second);
     }
   }
  private:
-  void move_to_head(DLinkedListNode *node);
-  void add_to_head(DLinkedListNode *node);
-  void del_tail();
+  void mov_to_head(DLinkedListNode *node) {
+    auto pnode = node->prev;
+    pnode->next = node->next;
+    pnode->next->prev = pnode;
+    add_to_head(node);
+  }
+  void add_to_head(DLinkedListNode *node) {
+    auto nnode = head_->next;
+    head_->next = node;
+    node->prev = head_;
+    node->next = nnode;
+    if (nnode != nullptr) {
+      nnode->prev = node;
+    }
+  }
+  int64_t del_tail() {
+    auto last_node = tail_->prev;
+    auto last_two = last_node->prev;
+    if (last_two == nullptr) return -1;
+    last_two->next = tail_;
+    tail_->prev = last_two;
+    auto key = last_node->key;
+    delete last_node;
+    return key;
+  }
  private:
   int capacity_{0};
   int32_t size_{0};
