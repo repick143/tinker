@@ -116,6 +116,9 @@ TEST(exercise, BubbleSort) {
   for (const auto &cs : gen_sort_case_batch(1000)) {
     sort_check(cs, QuickSort);
   }
+  for (const auto &cs : gen_sort_case_batch(1000)) {
+    sort_check(cs, QuickSortN);
+  }
   fmt::println("ok");
 }
 
