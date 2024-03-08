@@ -20,4 +20,20 @@ void BubbleSort(int64_t arr[], int32_t len) {
   }
 }
 
+void InsertionSort(int64_t arr[], int32_t len) {
+  if (len <= 1) return;
+  for (auto i = 1; i < len; i++) {
+    auto v = arr[i];
+    auto j = i - 1;
+    for (; j >= 0; j--) {
+      if (arr[j] > v) {
+        arr[j + 1] = arr[j];
+      } else {
+        break;
+      }
+    }
+    arr[j + 1] = v;
+  }
+}
+
 } // namespace tinker

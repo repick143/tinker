@@ -95,18 +95,21 @@ std::vector<SortCase> gen_sort_case_batch(int32_t size) {
 }
 
 TEST(exercise, BubbleSort) {
-  auto sort_cases = gen_sort_case_batch(1000);
-  auto sort_check = [](const SortCase &sort_case) {
+  auto sort_check = [](const SortCase &sort_case, std::function<void(int64_t[], int32_t)> f) {
     auto tmp = sort_case.DeepCopy();
-    BubbleSort(sort_case.arr.get(), sort_case.len);
+    f(sort_case.arr.get(), sort_case.len);
     std::sort(tmp.arr.get(), tmp.arr.get() + tmp.len);
     EXPECT_TRUE(tmp.DeepEqual(sort_case));
-    LOG(INFO) << tmp.DebugString();
-    LOG(INFO) << sort_case.DebugString();
+//    LOG(INFO) << tmp.DebugString();
+//    LOG(INFO) << sort_case.DebugString();
   };
-  for (const auto &cs : sort_cases) {
-    sort_check(cs);
+  for (const auto &cs : gen_sort_case_batch(1000)) {
+    sort_check(cs, BubbleSort);
   }
+  for (const auto &cs : gen_sort_case_batch(1000)) {
+    sort_check(cs, InsertionSort);
+  }
+  fmt::println("ok");
 }
 
 TEST(exercise, LruCache) {
