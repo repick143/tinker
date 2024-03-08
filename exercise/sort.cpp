@@ -8,7 +8,6 @@
 
 namespace tinker {
 void Merge(int64_t *arr, int32_t p, int32_t q, int32_t r) {
-//  auto tmp_arr = new int64_t[r - p + 1];
   int64_t tmp_arr[r - p + 1];
   int i = p, j = q + 1;
   int k = 0;
@@ -27,7 +26,6 @@ void Merge(int64_t *arr, int32_t p, int32_t q, int32_t r) {
   }
   memcpy(&tmp_arr[k], &arr[start], sizeof(int64_t) * (end - start + 1));
   memcpy(&arr[p], tmp_arr, sizeof(int64_t) * (r - p + 1));
-//  fmt::println("arr={},p={},q={},r={}", fmt::join(arr, arr + (r - p + 1), ","), p, q, r);
 }
 
 void MergeSortC(int64_t *arr, int32_t p, int32_t r) {
@@ -69,5 +67,25 @@ void InsertionSort(int64_t *arr, int32_t len) {
   }
 }
 
-void QuickSort(int64_t *arr, int length) {}
+int32_t Partition(int64_t *arr, int p, int r) {
+  auto pivot = arr[r];
+  int j = p;
+  for (auto i = p; i < r; i++) {
+    if (arr[i] < pivot) {
+      std::swap(arr[j++], arr[i]);
+    }
+  }
+  std::swap(arr[j], arr[r]);
+  return j;
+}
+
+void QuickSortC(int64_t *arr, int p, int r) {
+  if (p >= r) return;
+  auto q = Partition(arr, p, r);
+  QuickSortC(arr, p, q - 1);
+  QuickSortC(arr, q + 1, r);
+}
+void QuickSort(int64_t *arr, int len) {
+  QuickSortC(arr, 0, len - 1);
+}
 } // namespace tinker
