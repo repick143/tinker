@@ -138,4 +138,19 @@ void QuickSortN(int64_t *arr, int len) {
     }
   }
 }
+
+int BinarySearchImpl(int64_t key, int64_t *arr, int32_t p, int32_t r) {
+  if (p == r) return arr[p] == key ? p : -1;
+  if (p > r) return -1;
+  auto q = (p + r) / 2;
+  if (arr[q] == key) return q;
+  if (auto ret = BinarySearchImpl(key, arr, p, q - 1); ret != -1) return ret;
+  if (auto ret = BinarySearchImpl(key, arr, q + 1, r); ret != -1) return ret;
+  return -1;
+}
+
+int BinarySearch(int64_t key, int64_t *arr, int32_t len) {
+  return BinarySearchImpl(key, arr, 0, len - 1);
+}
+
 } // namespace tinker

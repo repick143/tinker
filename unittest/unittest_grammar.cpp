@@ -38,7 +38,7 @@ class SortCase {
     rhs.swap(*this);
     return *this;
   }
-  SortCase DeepCopy() const {
+  [[nodiscard]] SortCase DeepCopy() const {
     SortCase ret;
     if (len == 0 || arr == nullptr) return ret;
     ret.len = len;
@@ -47,7 +47,7 @@ class SortCase {
     return ret;
   }
 
-  bool DeepEqual(const SortCase &other) const {
+  [[nodiscard]] bool DeepEqual(const SortCase &other) const {
     if (len != other.len) return false;
     if (arr == other.arr) return true;
     if (arr == nullptr || other.arr == nullptr) return false;
@@ -56,7 +56,7 @@ class SortCase {
     return false;
   }
 
-  std::string DebugString() const {
+  [[nodiscard]] std::string DebugString() const {
     if (arr == nullptr) {
       return fmt::format("len={},arr=nullptr", len);
     }
@@ -94,7 +94,7 @@ std::vector<SortCase> gen_sort_case_batch(int32_t size) {
   return ret;
 }
 
-TEST(exercise, BubbleSort) {
+TEST(exercise, Sort) {
   auto sort_check = [](const SortCase &sort_case, std::function<void(int64_t[], int32_t)> f) {
     auto tmp = sort_case.DeepCopy();
     LOG(INFO) << "ori" << sort_case.DebugString();
