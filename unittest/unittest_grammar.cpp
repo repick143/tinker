@@ -97,12 +97,12 @@ std::vector<SortCase> gen_sort_case_batch(int32_t size) {
 TEST(exercise, Sort) {
   auto sort_check = [](const SortCase &sort_case, std::function<void(int64_t[], int32_t)> f) {
     auto tmp = sort_case.DeepCopy();
-    LOG(INFO) << "ori" << sort_case.DebugString();
+//    LOG(INFO) << "ori" << sort_case.DebugString();
     f(sort_case.arr.get(), sort_case.len);
     std::sort(tmp.arr.get(), tmp.arr.get() + tmp.len);
     EXPECT_TRUE(tmp.DeepEqual(sort_case)) << "";
-    LOG(INFO) << "cus" << sort_case.DebugString();
-    LOG(INFO) << "std" << tmp.DebugString();
+//    LOG(INFO) << "cus" << sort_case.DebugString();
+//    LOG(INFO) << "std" << tmp.DebugString();
   };
   for (const auto &cs : gen_sort_case_batch(1000)) {
     sort_check(cs, BubbleSort);
