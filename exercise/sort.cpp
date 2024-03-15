@@ -150,7 +150,17 @@ int BinarySearchImpl(int64_t key, int64_t *arr, int32_t p, int32_t r) {
 }
 
 int BinarySearch(int64_t key, int64_t *arr, int32_t len) {
-  return BinarySearchImpl(key, arr, 0, len - 1);
+  if (arr == nullptr) return -1;
+  auto start = 0;
+  auto end = len - 1;
+  while (start <= end) {
+    auto mid = (start + end) / 2;
+    if (arr[mid] == key) return mid;
+    if (arr[mid] < key) start = mid + 1;
+    if (arr[mid] > key) end = mid - 1;
+  }
+
+  return -1;
 }
 
 } // namespace tinker

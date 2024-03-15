@@ -5,6 +5,7 @@
 #include <memory>
 #include <random>
 #include "array"
+#include <unordered_set>
 
 #include "glog/logging.h"
 #include "exercise/tp.h"
@@ -104,6 +105,21 @@ TEST(exercise, Sort) {
 //    LOG(INFO) << "cus" << sort_case.DebugString();
 //    LOG(INFO) << "std" << tmp.DebugString();
   };
+  auto search_check = [](const SortCase &sort_case, std::function<int32_t(int64_t key, int64_t *arr, int32_t len)> f) {
+    std::sort(sort_case.arr.get(), sort_case.arr.get() + sort_case.len);
+    std::unordered_set<int64_t> arr_set;
+    arr_set.insert(sort_case.arr.get(), sort_case.arr.get() + sort_case.len);
+//    fmt::println("set={}", fmt::join(sort_case.arr.get(), sort_case.arr.get() + sort_case.len, ","));
+    for (auto i = 0; i < sort_case.len; i++) {
+      auto v = *(sort_case.arr.get() + i);
+      auto ret = BinarySearch(v, sort_case.arr.get(), sort_case.len);
+      EXPECT_EQ(v, *(sort_case.arr.get() + ret)) << fmt::format("i={},v={},ret={}", i, v, ret);
+    }
+    for (auto i = 0; i < 100; i++) {
+      if (arr_set.count(i) > 0) continue;
+      EXPECT_EQ(-1, BinarySearch(i, sort_case.arr.get(), sort_case.len));
+    }
+  };
   for (const auto &cs : gen_sort_case_batch(1000)) {
     sort_check(cs, BubbleSort);
   }
@@ -119,6 +135,10 @@ TEST(exercise, Sort) {
   for (const auto &cs : gen_sort_case_batch(1000)) {
     sort_check(cs, QuickSortN);
   }
+  for (const auto &cs : gen_sort_case_batch(1000)) {
+    search_check(cs, BinarySearch);
+  }
+
   fmt::println("ok");
 }
 

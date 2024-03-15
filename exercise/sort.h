@@ -14,6 +14,8 @@ void InsertionSort(int64_t *arr, int32_t len);
 void MergeSort(int64_t *arr, int32_t len);
 void QuickSort(int64_t *arr, int len);
 void QuickSortN(int64_t *arr, int len);
+
+int BinarySearch(int64_t key, int64_t *arr, int32_t len);
 }
 
 #endif //TINKER_SORT_H
